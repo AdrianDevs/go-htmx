@@ -18,7 +18,6 @@
 - Golang
 - Chi
 - Templ
-- WGO - Live reload for Go development
 
 **Auth**
 
@@ -47,16 +46,18 @@
 
 ```sh
 $ go mod tidy
-$ go run main.go
+$ go run home.go
 ```
 
 
 
 # Setup
 
-## Templ
+## Live Reload
 
-### Setup
+### Templ
+
+#### Setup
 
 Install Templ
 
@@ -72,7 +73,7 @@ export PATH="$PATH:$HOME/go/bin"
 
 Add the VS Code extension: https://marketplace.visualstudio.com/items?itemName=a-h.templ.
 
-### Run
+#### Run
 
 Templ files end with a  `.templ` extension. To generate templates from them:
 
@@ -90,7 +91,7 @@ To generate a specific file, run
 $ templ generate <filename>
 ```
 
-### Watch
+#### Watch
 
 Automatically watch for go and templ files and rebuild templates, rerun go and refresh the browser.
 
@@ -98,11 +99,11 @@ Automatically watch for go and templ files and rebuild templates, rerun go and r
 $ templ generate --watch --proxy="http://localhost:8080" --cmd="go run ."
 ```
 
-## WGO
+### WGO
 
 Live reload for Go apps. Watch arbitrary files and respond with arbitrary commands. It supports running multiple invocations in parallel.
 
-### Setup
+#### Setup
 
 ```sh
 $ go install github.com/bokwoon95/wgo@latest
@@ -114,17 +115,17 @@ Make sure Go is added to your PATH. In your `.zshrc` file, add the line.
 export PATH="$PATH:$HOME/go/bin"
 ```
 
-### Run
+#### Run
 
 Automatically watch for go and templ files and rebuild templates, rerun go. Note this will not refresh the browser.
 
 **Using WGO** - this will not refresh the browser.
 
 ```sh
-$ wgo -file=.go -file=.templ -xfile=_templ.go templ generate :: go run main.go
+$ wgo -file=.go -file=.templ -xfile=_templ.go templ generate :: go run home.go
 ```
 
-## Air (preferred)
+### Air (preferred)
 
 Live reloading for Go apps with support for automatic browser refreshing.
 
@@ -135,7 +136,7 @@ Site: https://github.com/air-verse/air
 - Reloads browser for both `.go` and `.temp` file changes
 - Is browser agnostic
 
-### Setup
+#### Setup
 
 ```sh
 $ go install github.com/air-verse/air@latest
@@ -196,13 +197,15 @@ tmp_dir = "tmp"
   app_port = 8080
 ```
 
-### Run
+#### Run
 
 Automatically watch for go and templ file changes, rebuild templates, rerun go and refresh the browser.
 
 ```sh
 $ air
 ```
+
+
 
 # Miscellaneous
 

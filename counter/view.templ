@@ -1,0 +1,20 @@
+package count
+
+import "strconv"
+
+templ counts(global int, session int) {
+    <div>
+        <h2>Global Count: {strconv.Itoa(global)}</h2>
+    </div>
+    <div>
+        <h2>Session Count: {strconv.Itoa(session)}</h2>
+    </div>
+
+}
+
+templ View(global int, session int) {
+    <body>
+        <h1>Counts</h1>
+        @counts(global, session)
+    </body>
+}

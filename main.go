@@ -2,53 +2,39 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"half.blue.gohtmx/counter"
+	"half.blue.gohtmx/home"
+	"log/slog"
 	"net/http"
+	"os"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"half.blue.gohtmx/handlers"
 )
 
 func main() {
-	// log.SetPrefix("greetings: ")
-	// log.SetFlags(0) // Disable printing the time, source file, and line number.
-
-	// names := []string{"Server", "Project", "Awesome"}
-	// messages, err := greetings.Hellos(names)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// fmt.Println(messages)
-
-	// Logger
-	// TODO
-
-	// Service
+	log := slog.New(slog.NewJSONHandler(os.Stderr, nil))
 	r := chi.NewRouter()
-
-	//refresh := reload.New("views/")
-	//r.Middlewares().Handler(refresh.Handle(r))
 
 	// Ping
 	r.Use(middleware.Heartbeat("/ping"))
 
-	r.Get("/", index)
+	r.Get("/", home.Index)
 
-	// user handlers
-	userHandler := handlers.UserHandler{
-		Service: "UserHandler service",
+	countStore, err := count.NewStore("dummy db", "table name")
+	if err != nil {
+		log.Error("failed to create counter store", slog.Any("error", err))
 	}
-	r.Get("/user", userHandler.Index)
+	countService := count.NewService(log, countStore)
+	incHandler := count.NewHandler(log, countService)
+	r.Get("/count", incHandler.Get)
+	r.Post("/count", incHandler.Post)
 
 	fmt.Printf("Starting server on port 8080\n")
 
-	err := http.ListenAndServe(":8080", r)
+	err = http.ListenAndServe(":8080", r)
 	if err != nil {
-		log.Fatal(err)
+		log.Error("Failed to start server", slog.Any("error", err))
+		os.Exit(1)
 	}
-}
-
-func index(w http.ResponseWriter, _ *http.Request) {
-	_, _ = w.Write([]byte("hiii"))
 }

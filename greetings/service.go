@@ -1,12 +1,30 @@
-package greetings
+package greet
 
 import (
+	"context"
 	"fmt"
+	"log/slog"
 	"math/rand"
 )
 
+type StoreInterface interface {
+	GetGreetings(ctx context.Context) (greetings []string, err error)
+}
+
+type Service struct {
+	Log   *slog.Logger
+	Store StoreInterface
+}
+
+func NewService(log *slog.Logger, store StoreInterface) *Service {
+	return &Service{
+		Log:   log,
+		Store: store,
+	}
+}
+
 // Hello returns a greeting for the named person.
-func Hello(name string) (string, error) {
+func (s Service) Hello(ctx context.Context, name string) (string, error) {
 	if name == "" {
 		return "", fmt.Errorf("empty name")
 	}
@@ -17,13 +35,13 @@ func Hello(name string) (string, error) {
 
 // Hellos returns a map that associates each of the named people
 // with a greeting message.
-func Hellos(names []string) (map[string]string, error) {
+func (s Service) Hellos(ctx context.Context, names []string) (map[string]string, error) {
 	// A map to associate names with messages.
 	messages := make(map[string]string)
 	// Loop through the received slice of names, calling
 	// the Hello function to get a message for each name.
 	for _, name := range names {
-		message, err := Hello(name)
+		message, err := s.Hello(ctx, name)
 		if err != nil {
 			return nil, err
 		}

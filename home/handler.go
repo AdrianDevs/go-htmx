@@ -1,10 +1,10 @@
 package home
 
 import (
-	"half.blue.gohtmx/lib"
+	"half.blue.gohtmx/util"
 	"net/http"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	lib.Render(w, r, Show())
+	util.Render(w, r, Show())
 }

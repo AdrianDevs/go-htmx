@@ -53,11 +53,10 @@ $ go run home.go
 
 # Setup
 
-## Live Reload
 
-### Templ
+## Templ
 
-#### Setup
+### Setup
 
 Install Templ
 
@@ -73,7 +72,7 @@ export PATH="$PATH:$HOME/go/bin"
 
 Add the VS Code extension: https://marketplace.visualstudio.com/items?itemName=a-h.templ.
 
-#### Run
+### Run
 
 Templ files end with a  `.templ` extension. To generate templates from them:
 
@@ -91,7 +90,7 @@ To generate a specific file, run
 $ templ generate <filename>
 ```
 
-#### Watch
+### Watch
 
 Automatically watch for go and templ files and rebuild templates, rerun go and refresh the browser.
 
@@ -99,11 +98,13 @@ Automatically watch for go and templ files and rebuild templates, rerun go and r
 $ templ generate --watch --proxy="http://localhost:8080" --cmd="go run ."
 ```
 
-### WGO
+## WGO
 
-Live reload for Go apps. Watch arbitrary files and respond with arbitrary commands. It supports running multiple invocations in parallel.
+Live reload for Go apps. Watch arbitrary files and respond with arbitrary commands. It supports running multiple invocations in parallel. 
 
-#### Setup
+**WGO can be used as an alternative to Templ watch or Air.**
+
+### Setup
 
 ```sh
 $ go install github.com/bokwoon95/wgo@latest
@@ -115,7 +116,7 @@ Make sure Go is added to your PATH. In your `.zshrc` file, add the line.
 export PATH="$PATH:$HOME/go/bin"
 ```
 
-#### Run
+### Run
 
 Automatically watch for go and templ files and rebuild templates, rerun go. Note this will not refresh the browser.
 
@@ -125,9 +126,11 @@ Automatically watch for go and templ files and rebuild templates, rerun go. Note
 $ wgo -file=.go -file=.templ -xfile=_templ.go templ generate :: go run home.go
 ```
 
-### Air (preferred)
+## Air (preferred)
 
-Live reloading for Go apps with support for automatic browser refreshing.
+Live reloading for Go apps with support for automatic browser refreshing. 
+
+**Air can be used as an alternative to Templ watch or WGO.**
 
 Site: https://github.com/air-verse/air
 
@@ -136,7 +139,7 @@ Site: https://github.com/air-verse/air
 - Reloads browser for both `.go` and `.temp` file changes
 - Is browser agnostic
 
-#### Setup
+### Setup
 
 ```sh
 $ go install github.com/air-verse/air@latest
@@ -197,7 +200,7 @@ tmp_dir = "tmp"
   app_port = 8080
 ```
 
-#### Run
+### Run
 
 Automatically watch for go and templ file changes, rebuild templates, rerun go and refresh the browser.
 
@@ -205,6 +208,11 @@ Automatically watch for go and templ file changes, rebuild templates, rerun go a
 $ air
 ```
 
+# Code Architecture
+
+Domain - >Handler -> Service -> Database(db_instance)
+
+​                                    -> View
 
 
 # Miscellaneous
@@ -216,9 +224,6 @@ $ air
 - `go mod tidy` is the equivalent of `npm install`. It will scan your project, fetch any dependencies on your code base, and update the `go.mod` file if necessary, such as when there are dependencies in the code base that are not in `go.mod`.
 - `$ go mod download` only downloads the dependencies from `go.mod` without modifying the `go.mod` file.
 
-## Code Architecture
+## Creating Diagrams
 
-Handler -> Service -> Database(db_instance)
-
-​               -> View
-
+PlantUML and C4 Diagrams

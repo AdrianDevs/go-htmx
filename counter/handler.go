@@ -2,36 +2,36 @@ package count
 
 import (
 	"context"
-	"half.blue.gohtmx/lib"
+	"half.blue.gohtmx/util"
 	"log/slog"
 	"net/http"
 )
 
-type CountService interface {
+type ServiceInterface interface {
 	Increment(ctx context.Context, it IncrementType, sessionID string) (counts Counts, err error)
 	Get(ctx context.Context, sessionID string) (counts Counts, err error)
 }
 
-type IncHandler struct {
-	Log          *slog.Logger
-	CountService CountService
+type Handler struct {
+	Log     *slog.Logger
+	Service ServiceInterface
 }
 
-func NewHandler(log *slog.Logger, cs CountService) *IncHandler {
-	return &IncHandler{
-		Log:          log,
-		CountService: cs,
+func NewHandler(log *slog.Logger, s ServiceInterface) *Handler {
+	return &Handler{
+		Log:     log,
+		Service: s,
 	}
 }
 
-func (h *IncHandler) Get(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Get(w http.ResponseWriter, r *http.Request) {
 	var props viewProps
 	props.Counts.Global = 1
 	props.Counts.Session = 2
 	showView(w, r, props)
 }
 
-func (h *IncHandler) Post(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Post(w http.ResponseWriter, r *http.Request) {
 	var props viewProps
 	props.Counts.Global = 3
 	props.Counts.Session = 4
@@ -43,5 +43,5 @@ type viewProps struct {
 }
 
 func showView(w http.ResponseWriter, r *http.Request, props viewProps) {
-	lib.Render(w, r, View(props.Counts.Global, props.Counts.Session))
+	util.Render(w, r, View(props.Counts.Global, props.Counts.Session))
 }

@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"half.blue.gohtmx/counter"
+	"half.blue.gohtmx/fileserver"
 	greet "half.blue.gohtmx/greetings"
 	"half.blue.gohtmx/home"
 	"log/slog"
 	"net/http"
 	"os"
-
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"path/filepath"
 )
 
 func main() {
@@ -38,6 +39,12 @@ func main() {
 	countHandler := count.NewHandler(log, countService)
 	r.Get("/count", countHandler.Get)
 	r.Post("/count", countHandler.Post)
+
+	// Set FileServer parameters that will serve contents from the ./static/ folder.
+	workDir, _ := os.Getwd()
+	fileServer := fileserver.NewFileServer(log, http.Dir(filepath.Join(workDir, "static")))
+	// FileServer routes files-server along /static
+	fileServer.Handler("/static", r)
 
 	fmt.Printf("Starting server on port 8080\n")
 

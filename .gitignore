@@ -35,7 +35,7 @@
 # Go workspace file
 go.work
 
-# Temple generated go files
+# Temple generated go files-server
 *_templ.go
 
 # Air output directory
@@ -55,10 +55,10 @@ tmp/
 # AWS User-specific
 .idea/**/aws.xml
 
-# Generated files
+# Generated files-server
 .idea/**/contentModel.xml
 
-# Sensitive or high-churn files
+# Sensitive or high-churn files-server
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
@@ -72,7 +72,7 @@ tmp/
 .idea/**/libraries
 
 # Gradle and Maven with auto-import
-# When using Gradle or Maven with auto-import, you should exclude module files,
+# When using Gradle or Maven with auto-import, you should exclude module files-server,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
 # .idea/artifacts
@@ -119,6 +119,9 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+# Other
+.idea/InspectionProfiles
 
 ### macOS template
 # General

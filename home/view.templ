@@ -1,10 +1,32 @@
 package home
 
-templ Show() {
-    <body>
-        <h1>Go + HTMX</h1>
-        <div>
-            <p>A project to learn about Go, HTMX and some other things along the way.</p>
-        </div>
-    </body>
+import "half.blue.gohtmx/components"
+
+templ Content() {
+   <header>
+      <h1>Go + HTMX</h1>
+      <div>
+        <p>A project to learn about Go, HTMX and some other things along the way.</p>
+      </div>
+    </header>
+
+    <main>
+      <h2>Navigate</h2>
+      <button
+        class="button"
+        hx-get="/greet"
+        hx-target="#page"
+        hx-swap="innerHTML"
+        hx-push-url="true"
+      >
+        Greetings
+      </button>
+      <button class="button">Counter</button>
+    </main>
+}
+
+templ Page(title string) {
+  @components.HTMLWrapper(title) {
+    @Content()
+  }
 }

@@ -46,7 +46,11 @@
 
 ```sh
 $ go mod tidy
+$ go install github.com/a-h/templ/cmd/templ@latest
+$ go install github.com/air-verse/air@latest
+$ templ generate
 $ go run home.go
+$ air
 ```
 
 

@@ -24,14 +24,15 @@ templ Content(is_htmx_req bool, title string) {
 		>
 			Greetings
 		</button>
-		<button class="button">Counter</button>
+		<button
+			class="button"
+			hx-get="/count"
+			hx-target="#page"
+			hx-swap="innerHTML"
+			hx-push-url="true"
+		>Counter</button>
 		<div>
 			<p>is htmx request: { strconv.FormatBool(is_htmx_req) }</p>
 		</div>
 	</main>
-	<div hx-swap-oob="outerHTML:#dev-footer">
-		<p>
-			What
-		</p>
-	</div>
 }

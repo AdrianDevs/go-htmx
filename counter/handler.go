@@ -2,9 +2,10 @@ package count
 
 import (
 	"context"
-	"half.blue.gohtmx/util"
 	"log/slog"
 	"net/http"
+
+	"half.blue.gohtmx/util"
 )
 
 type ServiceInterface interface {

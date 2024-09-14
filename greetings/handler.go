@@ -3,10 +3,10 @@ package greet
 import (
 	"context"
 	"fmt"
-	"half.blue.gohtmx/util"
 	"log/slog"
 	"net/http"
-	"strconv"
+
+	"half.blue.gohtmx/util"
 )
 
 type ServiceInterface interface {
@@ -37,14 +37,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) get(w http.ResponseWriter, r *http.Request) {
-	HTMXReqHeader := r.Header.Get("HX-Request")
-	hasHTMXReq, err := strconv.ParseBool(HTMXReqHeader)
-	if err != nil {
-		hasHTMXReq = false
-	}
-
 	var props ViewProps
-	props.isHTMXReq = hasHTMXReq
+	props.isHTMXReq = util.IsHTMXRequest(r)
 	props.Title = "Greetings"
 	props.Greeting, _ = h.Service.Hello(r.Context(), "bob")
 	showView(w, r, props)
@@ -58,7 +52,8 @@ type ViewProps struct {
 }
 
 func showView(w http.ResponseWriter, r *http.Request, props ViewProps) {
-	fmt.Println("Load greetings page")
+	fmt.Println("Show greetings page")
 	fmt.Println("- isHTMXReq:", props.isHTMXReq)
-	util.Render(w, r, Page(props.isHTMXReq, props.Title, props.Greeting))
+	util.Render(w, r, Content(props.isHTMXReq, props.Title, props.Greeting))
+
 }

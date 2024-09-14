@@ -2,16 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"half.blue.gohtmx/counter"
-	"half.blue.gohtmx/fileserver"
-	greet "half.blue.gohtmx/greetings"
-	"half.blue.gohtmx/home"
 	"log/slog"
 	"net/http"
 	"os"
 	"path/filepath"
+
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	count "half.blue.gohtmx/counter"
+	"half.blue.gohtmx/fileserver"
+	greet "half.blue.gohtmx/greetings"
+	"half.blue.gohtmx/home"
+	"half.blue.gohtmx/util"
 )
 
 func main() {
@@ -20,6 +22,7 @@ func main() {
 
 	// Ping
 	r.Use(middleware.Heartbeat("/ping"))
+	r.Use(util.CheckIfHtmxMiddlerware)
 
 	r.Get("/", home.Index)
 
@@ -39,6 +42,8 @@ func main() {
 	countHandler := count.NewHandler(log, countService)
 	r.Get("/count", countHandler.Get)
 	r.Post("/count", countHandler.Post)
+
+	http.Handle("/favicon.ico", http.NotFoundHandler())
 
 	// Set FileServer parameters that will serve contents from the ./static/ folder.
 	workDir, _ := os.Getwd()

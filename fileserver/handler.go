@@ -1,10 +1,11 @@
 package fileserver
 
 import (
-	"github.com/go-chi/chi"
 	"log/slog"
 	"net/http"
 	"strings"
+
+	"github.com/go-chi/chi"
 )
 
 type FileServer struct {

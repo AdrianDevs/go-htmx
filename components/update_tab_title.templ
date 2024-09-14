@@ -1,0 +1,12 @@
+package components
+
+var tagTitleHandle = templ.NewOnceHandle()
+
+templ UpdateTabTitle(title string) {
+	@templ.JSONScript("script-tab-title-data", title)
+	@tagTitleHandle.Once() {
+		<script>
+    updateTabTitle(JSON.parse(document.getElementById("script-tab-title-data").textContent))
+  </script>
+	}
+}

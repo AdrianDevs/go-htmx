@@ -1,26 +1,23 @@
 package greet
 
-import "half.blue.gohtmx/components"
-import "strconv"
+import (
+	"half.blue.gohtmx/components"
+	"strconv"
+)
 
-templ Content(greeting string) {
-    <h3>{ greeting }</h3>
-    <button
-      class="button"
-      hx-get="/"
-      hx-target="#page"
-      hx-swap="innerHTML"
-      hx-replace-url="true"
-    >
-    back
-    </button>
-}
-
-templ Page(is_htmx_req bool, title string,  greeting string) {
-  @components.HTMLWrapper(title) {
-    @Content(greeting)
-    <div>
-      <p>is htmx request: {strconv.FormatBool(is_htmx_req)}</p>
-    </div>
-  }
+templ Content(is_htmx_req bool, title string, greeting string) {
+	@components.UpdateTabTitle(title)
+	<h3>{ greeting }</h3>
+	<button
+		class="button"
+		hx-get="/"
+		hx-target="#page"
+		hx-swap="innerHTML"
+		hx-replace-url="true"
+	>
+		back
+	</button>
+	<div>
+		<p>is htmx request: { strconv.FormatBool(is_htmx_req) }</p>
+	</div>
 }

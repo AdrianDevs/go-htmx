@@ -1,0 +1,52 @@
+name: gohtmx
+services:
+  # web:
+  #   build: .
+  #   ports:
+  #     - '80:8000'
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   command: ['python', 'app.py']
+
+  db:
+    container_name: postgres
+    hostname: postgres
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    # healthcheck:
+    #   test: ["CMD-SHELL", "pg_isready"]
+    #   interval: 1s
+    #   timeout: 5s
+    #   retries: 10
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  adminer:
+    container_name: adminer
+    hostname: adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8090:8080
+    networks:
+      - internal
+
+volumes:
+  pgdata:
+
+networks:
+  # everything that is *only* on "internal network" cannot talk to WAN
+  internal:
+    external: false
+  # add this network to a container to make it talk to the rest of the world
+  # frontend:
+  #   external: true

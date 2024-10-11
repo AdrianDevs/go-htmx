@@ -44,16 +44,39 @@
 
 # Run
 
+To run the code and not watch for changes, do the following. 
+
 ```sh
 $ go mod tidy
 $ go install github.com/a-h/templ/cmd/templ@latest
 $ go install github.com/air-verse/air@latest
 $ templ generate
-$ go run home.go
+$ go run main.go
+```
+
+or
+
+```sh
+$ make deps
+$ make run
+```
+
+To watch for changes, do the following instead
+
+```sh
+$ go mod tidy
+$ go install github.com/a-h/templ/cmd/templ@latest
+$ go install github.com/air-verse/air@latest
+$ templ generate
 $ air
 ```
 
+or
 
+```sh
+$ make deps
+$ make watch
+```
 
 # Setup
 

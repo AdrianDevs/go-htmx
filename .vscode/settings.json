@@ -8,5 +8,17 @@
   },
   "emmet.includeLanguages": {
     "templ": "html"
-  }
+  },
+  "makefile.configureOnOpen": false,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "docker postgres",
+      "database": "postgres",
+      "username": "root"
+    }
+  ]
 }
